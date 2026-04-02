@@ -32,4 +32,22 @@ export const userRoutes = new Elysia({ prefix: '/api' })
       email: t.String({ format: 'email' }),
       password: t.String(),
     }),
+  })
+  .get('/users/current', async ({ headers, set }) => {
+    const auth = headers['authorization'];
+
+    if (!auth || !auth.startsWith('Bearer ')) {
+      set.status = 401;
+      return { data: 'Unauthorized' };
+    }
+
+    const token = auth.split(' ')[1]!;
+    const result = await UserService.getCurrentUser(token);
+
+    if (!result.success) {
+      set.status = 401;
+      return { data: 'Unauthorized' };
+    }
+
+    return { data: result.data };
   });

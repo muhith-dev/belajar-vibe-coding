@@ -1,5 +1,5 @@
 import { Elysia } from 'elysia';
-import { userRoutes } from './routes/user-routes';
+import { userRoutes } from './routes/users-route';
 
 const app = new Elysia()
   .get('/', () => 'Hello Elysia!')

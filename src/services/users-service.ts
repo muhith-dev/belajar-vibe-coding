@@ -83,4 +83,9 @@ export class UserService {
 
     return { success: true, data: result[0] };
   }
+
+  static async logoutUser(token: string) {
+    await db.delete(sessions).where(eq(sessions.token, token));
+    return { success: true };
+  }
 }
